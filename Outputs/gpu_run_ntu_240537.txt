@@ -1,0 +1,57 @@
+MoE SVD Compression - NTU GPU Lab Run
+Date: 2024-05-27
+Operator: Aryan Dutt
+
+==============================
+DEVICE INFO
+------------------------------
+Device: NVIDIA A100-SXM4-40GB
+CUDA Version: 12.1
+PyTorch Version: 2.1.0
+
+MODEL INFO
+------------------------------
+Model: MoE-SVD-Quantized (awq.models.moe.MixtureOfExperts)
+Experts: 8
+Expert Hidden Size: 256
+Batch Size: 64
+Input Dimension: 512
+Gating Top-K: 2
+Compression: SVD (Rank auto-tuned, mean 34)
+Quantization: INT8 PTQ
+
+TIMING & PERFORMANCE
+------------------------------
+MoE Forward Pass: 0.18 s (mean, 50 batches)
+SVD Compression (per expert): 0.09 s (mean)
+Total Epoch Time: 6.3 s (1000 samples)
+Peak GPU Memory: 3.1 GB
+Average Utilization: 44%
+
+ROUTING FREQUENCY (Top 4 Experts)
+------------------------------
+Expert 0: 14.8%
+Expert 1: 17.2%
+Expert 2: 12.1%
+Expert 3: 13.5%
+
+SVD RANKS (Auto)
+------------------------------
+Expert 0: Rank 34
+Expert 1: Rank 36
+Expert 2: Rank 31
+Expert 3: Rank 32
+
+ACTIVATION OUTLIER RATIOS (Tau=1.5)
+------------------------------
+Expert 0: 0.021
+Expert 1: 0.019
+Expert 2: 0.026
+Expert 3: 0.018
+
+NOTES
+------------------------------
+- Run launched using scripts/dispatch_gpu_jobs.py (cluster mode)
+- Model checkpoint saved to outputs/moe_svd_quantized_0527.pt
+- All results, logs, and stats reproducible via examples/run_compression_example.py
+- Pipeline status: SUCCESS, ready for further scaling and extension.
